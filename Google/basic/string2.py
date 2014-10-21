@@ -16,8 +16,12 @@
 # If the string length is less than 3, leave it unchanged.
 # Return the resulting string.
 def verbing(s):
-  # +++your code here+++
-  return
+  ln=len(s);
+  if(ln<3):
+    return s;
+  if(s[ln-3]=='i' and s[ln-2] =='n' and s[ln-1]=='g'):
+    return (s+"ly");
+  return (s+"ing");
 
 
 # E. not_bad
@@ -29,8 +33,22 @@ def verbing(s):
 # So 'This dinner is not that bad!' yields:
 # This dinner is good!
 def not_bad(s):
-  # +++your code here+++
-  return
+  ret="";
+  ln=len(s);
+  for i in range(0,ln-3):#try to search bad
+    if(s[i]=='n' and s[i+1]=='o' and s[i+2]=='t'):
+      for j in range(i+3,ln-2):
+        if(s[j]=='b' and s[j+1]=='a' and s[j+2]=='d'):#try to search not bad
+          ans="";
+          for k in range(0,i):
+            ans=ans+s[k];
+            
+          ans=ans+"good";
+          
+          for k in range(j+3,ln):
+            ans=ans+s[k];
+          return ans;            
+  return s;
 
 
 # F. front_back
@@ -40,9 +58,25 @@ def not_bad(s):
 # e.g. 'abcde', the front half is 'abc', the back half 'de'.
 # Given 2 strings, a and b, return a string of the form
 #  a-front + b-front + a-back + b-back
+
+#helper function for get front()
+def get_front(a):
+  ans="";
+  for i in range(0, (len(a)+1)//2):
+    ans+=a[i];
+  return ans;
+
+#helper function to get_back()
+
+def get_back(a):
+  ans="";
+  for i in range( (len(a)+1)//2 , len(a) ):
+    ans=ans+a[i];
+  return ans;
+  
 def front_back(a, b):
-  # +++your code here+++
-  return
+  
+  return get_front(a)+get_front(b)+get_back(a)+get_back(b);
 
 
 # Simple provided test() function used in main() to print
@@ -52,26 +86,26 @@ def test(got, expected):
     prefix = ' OK '
   else:
     prefix = '  X '
-  print '%s got: %s expected: %s' % (prefix, repr(got), repr(expected))
+  print ('%s got: %s expected: %s' % (prefix, repr(got), repr(expected)))
 
 
 # main() calls the above functions with interesting inputs,
 # using the above test() to check if the result is correct or not.
 def main():
-  print 'verbing'
+  print ('verbing')
   test(verbing('hail'), 'hailing')
   test(verbing('swiming'), 'swimingly')
   test(verbing('do'), 'do')
 
   print
-  print 'not_bad'
+  print ('not_bad')
   test(not_bad('This movie is not so bad'), 'This movie is good')
   test(not_bad('This dinner is not that bad!'), 'This dinner is good!')
   test(not_bad('This tea is not hot'), 'This tea is not hot')
   test(not_bad("It's bad yet not"), "It's bad yet not")
 
   print
-  print 'front_back'
+  print ('front_back')
   test(front_back('abcd', 'xy'), 'abxcdy')
   test(front_back('abcde', 'xyz'), 'abcxydez')
   test(front_back('Kitten', 'Donut'), 'KitDontenut')
