@@ -50,7 +50,7 @@ def mimic_dict(filename):
   """Returns mimic dict mapping each word to list of words which follow it."""
   file=open(filename,"r");
   all=file.read();
-  list=all.split(' ');
+  list=all.split();
   dict={};
   #dict.setdefault("", []).append("y");
   #dict.setdefault("x", []).append("zz");
