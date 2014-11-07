@@ -37,14 +37,42 @@ Suggested milestones for incremental development:
  -Fix main() to use the extract_names list
 """
 
+#heplper function to sort 
+def get_key(a):
+  return a[0];
+
 def extract_names(filename):
   """
   Given a file name for baby.html, returns a list starting with the year string
   followed by the name-rank strings in alphabetical order.
   ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
   """
-  # +++your code here+++
-  return
+  file=open(filename,"r");
+  text=file.read();
+  
+  #search for year 
+  match=re.search(r'Popularity\sin\s(\d\d\d\d)', text);
+
+  year="not found"
+  
+  if (match):
+    year=match.group(1);
+    print(year);
+  else:
+    print( " No match found for year ");
+    sys.exit(1);
+
+  all_name=re.findall( r'<td>(\d+)</td><td>(\w+)</td>\<td>(\w+)</td>',text);
+
+  name_rank=[];
+
+  for rbg in all_name:
+    name_rank.append( (rbg[1],rbg[0]) );
+    name_rank.append( (rbg[2],rbg[0]) );
+
+  name_rank = sorted(name_rank,key=get_key);
+  
+  return name_rank;
 
 
 def main():
@@ -66,6 +94,7 @@ def main():
   # +++your code here+++
   # For each filename, get the names, then either print the text output
   # or write it to a summary file
+  extract_names("baby1990.html");
   
 if __name__ == '__main__':
   main()
