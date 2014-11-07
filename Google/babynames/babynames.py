@@ -57,7 +57,7 @@ def extract_names(filename):
   
   if (match):
     year=match.group(1);
-    print(year);
+    #print(year);
   else:
     print( " No match found for year ");
     sys.exit(1);
@@ -78,18 +78,13 @@ def extract_names(filename):
   final_list=[];
 
   final_list.append( year);
-  final_list.append( name_rank[0] );
+  final_list.append(  name_rank[0][0] + "   " + name_rank[0][1]  );
 
   for i in range(1 , len(name_rank) ):
     if( name_rank[i][0] != name_rank[i-1][0] ):
-      final_list.append( name_rank[i] );
+      final_list.append( name_rank[i][0] + "   " + name_rank[i][1] );
 
  # future wotk : can optimize it to use only one list
-
-  #print(name_rank);
-
-  #print("\n\n\ .. . .. \n\n");
-  #print(final_list);
   
   return final_list;
 
@@ -110,10 +105,28 @@ def main():
     summary = True
     del args[0]
 
+
   # +++your code here+++
   # For each filename, get the names, then either print the text output
   # or write it to a summary file
-  extract_names("test0.html");
+
+  for file_name in args:
+    
+    names = extract_names(file_name);
+
+    text_to_write = '\n'.join(names)
+    
+    file_to_print = file_name + "_summary";
+    
+    file=open(file_to_print,'w');
+
+    if(summary):
+      file.write(text_to_write );
+    else:
+      print(text_to_write );
+
+
+
   
 if __name__ == '__main__':
   main()
