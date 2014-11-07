@@ -71,8 +71,27 @@ def extract_names(filename):
     name_rank.append( (rbg[2],rbg[0]) );
 
   name_rank = sorted(name_rank,key=get_key);
+
+  # A NAME CAN APPER MORE THAB ONE , SO REMOVING NAME DUPLICATES
+  # DUPLICATEDW ILL BE ADJACENT IN THE SORTED LIST
+
+  final_list=[];
+
+  final_list.append( year);
+  final_list.append( name_rank[0] );
+
+  for i in range(1 , len(name_rank) ):
+    if( name_rank[i][0] != name_rank[i-1][0] ):
+      final_list.append( name_rank[i] );
+
+ # future wotk : can optimize it to use only one list
+
+  #print(name_rank);
+
+  #print("\n\n\ .. . .. \n\n");
+  #print(final_list);
   
-  return name_rank;
+  return final_list;
 
 
 def main():
@@ -94,7 +113,7 @@ def main():
   # +++your code here+++
   # For each filename, get the names, then either print the text output
   # or write it to a summary file
-  extract_names("baby1990.html");
+  extract_names("test0.html");
   
 if __name__ == '__main__':
   main()
