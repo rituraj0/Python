@@ -10,6 +10,7 @@ import sys
 import re
 import os
 import shutil
+import zipfile
 
 
 """Copy Special exercise
@@ -74,7 +75,12 @@ def main():
   temp = [];
   temp = get_special_paths(args[0]);
   print(temp);
-  copy_to( temp ,todir );   
+  copy_to( temp ,todir );
+
+  tp=zipfile.ZipFile( "yzx.zip",'w');
+
+  for files in temp:
+    tp.write(files);
 
   if len(args) == 0:
     print ("error: must specify one or more dirs");
