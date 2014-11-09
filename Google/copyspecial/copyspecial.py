@@ -28,8 +28,20 @@ def get_special_paths(direc):
     if(match):
       ans.append(os.path.abspath(os.path.join(direc,files)));
 
-  print(ans);
-  return;
+  #print(ans);
+  return ans;
+
+
+def copy_to(paths , todir):
+
+  if(not os.path.exists(todir) ):
+    os.mkdir(todir);
+     
+  for files in paths:
+    shutil.copy(files,todir);
+
+  return;  
+    
       
 
 
@@ -44,9 +56,8 @@ def main():
   if not args:
     print ("usage: [--todir dir][--tozip zipfile] dir [dir ...]");
     sys.exit(1)
-
-  get_special_paths(args[0]);  
-
+ 
+  # copyspecial.py --todir test .
   # todir and tozip are either set from command line
   # or left as the empty string.
   # The args array is left just containing the dirs.
@@ -59,6 +70,11 @@ def main():
   if args[0] == '--tozip':
     tozip = args[1]
     del args[0:2]
+
+  temp = [];
+  temp = get_special_paths(args[0]);
+  print(temp);
+  copy_to( temp ,todir );   
 
   if len(args) == 0:
     print ("error: must specify one or more dirs");
