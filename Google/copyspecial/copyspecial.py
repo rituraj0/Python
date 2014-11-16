@@ -44,7 +44,12 @@ def copy_to(paths , todir):
   return;  
     
       
-
+def make_zip(paths , zipname ):
+# tp=zipfile.ZipFile( "yzx.zip",'w');
+  zp=zipfile.ZipFile( zipname,'w');
+  for files in paths:
+    zp.write(files);
+  return;
 
 
 def main():
@@ -72,22 +77,24 @@ def main():
     tozip = args[1]
     del args[0:2]
 
-  temp = [];
-  temp = get_special_paths(args[0]);
-  print(temp);
-  copy_to( temp ,todir );
-
-  tp=zipfile.ZipFile( "yzx.zip",'w');
-
-  for files in temp:
-    tp.write(files);
-
   if len(args) == 0:
     print ("error: must specify one or more dirs");
     sys.exit(1)
 
   # +++your code here+++
   # Call your functions
+
+    # Gather all the special files
+  paths = []
+  for dirname in args:
+    paths.extend(get_special_paths(dirname))
+
+  if todir:
+    copy_to(paths, todir)
+  elif tozip:
+    make_zip(paths, tozip)
+  else:
+    print ('\n'.join(paths));
   
 if __name__ == "__main__":
   main()
